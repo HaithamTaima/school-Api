@@ -24,7 +24,13 @@ Route::group(['prefix'=>'auth'],function (){
     Route::post('register',[\App\Http\Controllers\Auth\AuthController::class,'register']);
 });
 
+
 Route::group(['prefix'=>'v1','middleware'=> 'auth:api'],function (){
+    Route::get('user/{id}',[\App\Http\Controllers\UserController::class,'profile']);
+
     Route::resource('departments',\App\Http\Controllers\DepartmentController::class);
     Route::resource('teachers',\App\Http\Controllers\TeacherController::class);
+
+    Route::resource('courses',\App\Http\Controllers\CourseController::class);
+
 });
