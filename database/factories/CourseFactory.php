@@ -20,7 +20,6 @@ class CourseFactory extends Factory
     {
         return [
             'title' => $this->faker->paragraph,
-            'user_id'=> User::inRandomOrder()->first()->id,
         ];
     }
 }

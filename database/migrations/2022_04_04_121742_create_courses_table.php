@@ -16,11 +16,6 @@ return new class extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->string('title',2024);
-            $table->unsignedBigInteger('user_id')->index();
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
             $table->timestamps();
         });
     }

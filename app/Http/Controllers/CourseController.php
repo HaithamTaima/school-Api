@@ -36,7 +36,6 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         Course::create([
-            'user_id' => $request->user()->id,
             'title' => $request->get('title'),
         ]);
 
@@ -49,9 +48,11 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
+    public function show($id)
     {
-        //
+        $course = Course::with('users')->find($id);
+
+        return response()->json(['course'=>$course]);
     }
 
     /**
@@ -75,10 +76,9 @@ class CourseController extends Controller
     public function update(Request $request, Course $course)
     {
         $course = Course::where('id',$course->id)
-            ->where('user_id','=',$request->user()->id)->first();
+            ->first();
         if (isset($course)) {
-            Course::where('user_id','=',$request->user()->id)
-                ->where('id','=',$course->id)
+            Course::where('id','=',$course->id)
                 ->update([
                     'title' => $request->get('title')
                 ]);
@@ -99,11 +99,9 @@ class CourseController extends Controller
     public function destroy(Request $request, $id)
     {
         $user_id = $request->user()->id;
-       $course = Course::where('user_id','=',$user_id)
-           ->where('id','=',$id)->first();
+       $course = Course::where('id','=',$id)->first();
        if (isset($course)) {
-          Course::where('user_id','=',$user_id)
-               ->where('id','=',$id)
+          Course::where('id','=',$id)
               ->delete();
 
            return response()->json('deleted success');
