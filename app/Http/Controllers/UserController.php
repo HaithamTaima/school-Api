@@ -13,6 +13,10 @@ class UserController extends Controller
         try {
             $user = User::with('courses')->find($id);
 
+
+
+
+
             return response()->json(['user'=>$user]);
 //            return [
 //                'name' => $user->name,
