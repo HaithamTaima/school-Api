@@ -29,6 +29,7 @@ Route::get('v1/course/{id}',[\App\Http\Controllers\CourseController::class,'show
 
 Route::group(['prefix'=>'v1','middleware'=> 'auth:api'],function (){
 
+    Route::get('users',[\App\Http\Controllers\UserController::class,'index']);
 
     Route::resource('departments',\App\Http\Controllers\DepartmentController::class);
     Route::resource('teachers',\App\Http\Controllers\TeacherController::class);

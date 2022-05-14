@@ -75,9 +75,12 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
+        $users = json_decode($request->get('users',[]),true);
+
         $course = Course::where('id',$course->id)
             ->first();
         if (isset($course)) {
+            $course->users()->sync($users);
             Course::where('id','=',$course->id)
                 ->update([
                     'title' => $request->get('title')
@@ -101,6 +104,7 @@ class CourseController extends Controller
         $user_id = $request->user()->id;
        $course = Course::where('id','=',$id)->first();
        if (isset($course)) {
+       //    $course->users()->detach();
           Course::where('id','=',$id)
               ->delete();
 
